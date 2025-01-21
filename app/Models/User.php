@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use \Illuminate\Validation\Validator;
 
 class User extends Authenticatable
 {
@@ -15,24 +16,31 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
+        // 'level'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
+
+     public function savings()
+    {
+        return $this->hasMany(Saving::class);
+    }
     /**
      * Get the attributes that should be cast.
      *
@@ -41,8 +49,46 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            'password_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+      public static function rules($process)
+    {
+        if ($process == 'insert') {
+            return [
+            'name' => 'required|string|max:225',
+            'username'  => 'required|string|max:225',
+            'password'  => 'required|string',
+            // 'level' => 'required|enum:Administrator,Petugas',
+            ];
+
+        } elseif ($process == 'update') {
+            return [
+            'name' => 'required|string|max:225',
+            'username'  => 'required|string|max:225',
+            'password'  => 'required|string',
+            // 'level' => 'required|enum:Administrator,Petugas'
+            ];
+        }
+    }
+
+    public static function customValidation(Validator $validator)
+    {
+        $customAttributes = [
+            'name' => 'required|string|max:225',
+            'username'  => 'required|string|max:225',
+            'password'  => 'required|string',
+            // 'level' => 'required|enum:Administrator,Petugas',
+        ];
+
+
+        $validator->addReplacer('required', function ($message, $attribute, $rule, $parameters) use ($customAttributes) {
+            return str_replace(':attribute', $customAttributes[$attribute], ':attribute harus diisi.');
+        });
+
+        $validator->addReplacer('date', function ($message, $attribute, $rule, $parameters) use ($customAttributes) {
+            return str_replace(':attribute', $customAttributes[$attribute], ':attribute harus berupa tanggal.');
+        });
     }
 }

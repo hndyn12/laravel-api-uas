@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('studens', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->char('nis', 10);
+            $table->string('nama_siswa', 40);
+            $table->enum('jekel', ['LK', 'PR'])->default('LK');
+            $table->foreignId('grade_id')->constrained('grades');
+            $table->enum('status', ['Aktif', 'Lulus', 'Pindah'])->default('Aktif');
+            $table->year('th_masuk');
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('studens');
+        Schema::dropIfExists('students');
     }
 };
