@@ -37,10 +37,10 @@ class Student extends Model
 
         } elseif ($process == 'update') {
             return [
-                'nis' => 'required|numeric',
-                'nama_siswa' => 'required|string|max:225',
-                'grade_id' => 'required|string',
-                'th_masuk' => 'required|numeric',
+                'nis' => 'numeric',
+                'nama_siswa' => 'string|max:225',
+                'grade_id' => 'string',
+                'th_masuk' => 'numeric',
             ];
         }
     }
