@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pengguna');
+            $table->string('name');
             $table->string('username');
+            $table->string('password');
             $table->timestamp('password_verified_at')->nullable();
             $table->enum('level',['Administrator', 'Petugas']);
             $table->rememberToken();

@@ -48,10 +48,10 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $nis)
     {
         try {
-            $data = Student::find($id);
+            $data = Student::find($nis);
 
             return response()->json(['data' => $data], 200);
         } catch (\Throwable $e) {
@@ -62,10 +62,10 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $nis)
     {
         try {
-            $data = Student::find($id);
+            $data = Student::find($nis);
 
             return response()->json(['data' => $data], 200);
         } catch (\Throwable $e) {
@@ -76,7 +76,7 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $nis)
     {
        $validator = Validator::make($request->all(), Student::rules('update'));
         Student::customValidation($validator);
@@ -86,7 +86,7 @@ class StudentController extends Controller
         }
 
       try {
-            $data = Student::find($id);
+            $data = Student::find($nis);
             $data->update($request->all());
 
             return response()->json(['message' => 'Data berhasil diupdate', 'data' => $data]);
@@ -98,10 +98,10 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $nis)
     {
          try {
-            $data = Student::find($id);
+            $data = Student::find($nis);
             $data->delete();
 
             return response()->json(['message' => 'Data berhasil dihapus'], 200);
