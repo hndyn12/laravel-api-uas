@@ -22,14 +22,18 @@ class Saving extends Model
             return [
                 'student_id' => 'required|numeric',
                 'tgl' => 'required|date',
-                'jenis' => 'required|string',
+                'setor' => 'required|numeric',
+                'tarik' => 'required|numeric',
+                'jenis' => 'required|in:ST,TR',
             ];
 
         } elseif ($process == 'update') {
             return [
-                'student_id' => 'required|numeric',
-                'tgl' => 'required|date',
-                'jenis' => 'required|string',
+                'student_id' => 'numeric',
+                'tgl' => 'date',
+                'setor' => 'numeric',
+                'tarik' => 'numeric',
+                'jenis' => 'in:ST,TR',
             ];
         }
     }
@@ -39,6 +43,8 @@ class Saving extends Model
         $customAttributes = [
                 'student_id' => 'student_id',
                 'tgl' => 'Tanggal Transaksi',
+                'setor' => 'Setor',
+                'tarik' => 'Tarik',
                 'jenis' => 'Jenis Transaksi',
         ];
 
