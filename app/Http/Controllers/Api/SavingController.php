@@ -13,7 +13,7 @@ class SavingController extends Controller
     {
         $data = Saving::get();
 
-        return response()->json(['data' => $data], 400);
+        return response()->json(['data' => $data], 200);
     }
 
     /**
