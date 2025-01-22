@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
-            $table->char('nis', 10);
+            $table->char('nis', 10)->primary();
             $table->string('nama_siswa', 40);
             $table->enum('jekel', ['LK', 'PR'])->default('LK');
             $table->foreignId('grade_id')->constrained('grades');
